@@ -9,7 +9,7 @@
 | Unity Versiyonu | 2022.3.x |
 | Render Pipeline | URP |
 | Case Süresi | Geliştirme aşaması |
-| Tamamlanma Oranı | %15 |
+| Tamamlanma Oranı | %40 |
 
 ---
 
@@ -21,13 +21,17 @@
 
 ## Durum
 
-Proje iskeleti oluşturuldu ve temel etkileşim sınıfları implement edildi.
-- **Core:** `IInteractable`, `InteractionType` ve base sınıflar (`BaseInteractable`, `InstantInteractable`, `HoldInteractable`, `ToggleInteractable`) yazıldı.
-- **Standartlar:** Tüm sınıflar Ludu Arts kodlama standartlarına (XML Docs, PascalCase, Namespace) uygun hazırlandı.
+Proje temel sistemleri ve oyuncu etkileşim algılayıcısı tamamlandı.
+- **Core:** `IInteractable` ve base sınıflar hazır.
+- **Player:** 
+    - `PlayerController` (Movement & Cinemachine Look) tamamlandı.
+    - `InteractionDetector` (Raycast tabanlı algılama, Collider caching sistemi ve New Input System entegrasyonu) tamamlandı.
+- **Standartlar:** Ludu Arts kodlama standartlarına (XML Docs, prefix kullanımı, regionlar) uyum sağlandı.
 
 ## Sırada Ne Var?
 
-- `InteractionDetector` (Player raycast sistemi)
-- Concrete Interactables (`Door`, `Chest` vb.)
+- Concrete Interactables (`Door`, `Chest`, `Key`, `Switch`)
+- UI Feedback Sistemi (Prompt & Progress Bar)
+- Basit Envanter Sistemi
 
 ---

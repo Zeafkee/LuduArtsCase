@@ -843,6 +843,7 @@ GameObject:
   - component: {fileID: 1547710254}
   - component: {fileID: 1547710253}
   - component: {fileID: 1547710259}
+  - component: {fileID: 1547710260}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1003,6 +1004,25 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 330585545}
+--- !u!114 &1547710260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547710252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c80aa20699bc24488d7aacc3132e255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LuduInteraction.Runtime.Player.InteractionDetector
+  m_Camera: {fileID: 330585545}
+  m_InteractionRange: 3
+  m_InteractionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  m_InteractAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ShowDebugRay: 1
 --- !u!1 &1701707068
 GameObject:
   m_ObjectHideFlags: 0
