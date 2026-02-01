@@ -72,6 +72,12 @@
             {
                 m_Animator.SetBool(m_AnimParamName, m_IsOn);
             }
+
+            // Snap object state
+            if (m_TargetObject != null)
+            {
+                m_TargetObject.SetActive(m_IsOn);
+            }
         }
 
         public override bool SaveState()
