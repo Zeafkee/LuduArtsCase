@@ -10,98 +10,108 @@
         /// </summary>
         public class Door : ToggleInteractable
         {
-            #region Fields
-
-            [Header("Lock Settings")]
-            [SerializeField] private bool m_IsLocked;
-            [SerializeField] private ItemData m_RequiredKey;
+                    #region Fields
             
-            [Header("Animation Settings")]
-            [SerializeField] private Vector3 m_OpenedRotationEuler;
-            [SerializeField] private float m_TransitionDuration = 1.0f;
-            [SerializeField] private Ease m_TransitionEase = Ease.OutQuart;
-
-            [Header("Prompts")]
-            [SerializeField] private string m_LockedPrompt = "Locked (Key Required)";
-            [SerializeField] private string m_OpenPrompt = "Close Door";
-            [SerializeField] private string m_ClosedPrompt = "Open Door";
-
-            private Quaternion m_OpenedQuaternion;
-            private Quaternion m_ClosedQuaternion;
-            private Tween m_RotationTween;
-
-            #endregion
-
-            #region Properties
-
-            /// <summary>
-            /// Returns a dynamic prompt based on the door's current state.
-            /// </summary>
-            public override string InteractionPrompt
-            {
-                get
-                {
-                    if (m_IsLocked)
+                    [Header("Lock Settings") ]
+                    [SerializeField] private bool m_IsLocked;
+                    [SerializeField] private ItemData m_RequiredKey;
+                    
+                    [Header("Animation Settings") ]
+                    [Tooltip("The Transform that will be rotated (e.g. the Anchor or the Door itself).")]
+                    [SerializeField] private Transform m_DoorTransform;
+                    [SerializeField] private Vector3 m_OpenedRotationEuler;
+                    [SerializeField] private float m_TransitionDuration = 1.0f;
+                    [SerializeField] private Ease m_TransitionEase = Ease.OutQuart;
+            
+                    [Header("Prompts") ]
+                    [SerializeField] private string m_LockedPrompt = "Locked (Key Required)";
+                    [SerializeField] private string m_OpenPrompt = "Close Door";
+                    [SerializeField] private string m_ClosedPrompt = "Open Door";
+            
+                    private Quaternion m_OpenedQuaternion;
+                    private Quaternion m_ClosedQuaternion;
+                    private Tween m_RotationTween;
+            
+                    #endregion
+            
+                    #region Properties
+            
+                    /// <inheritdoc />
+                    public override string InteractionPrompt
                     {
-                        string keyName = m_RequiredKey != null ? m_RequiredKey.ItemName : "Key";
-                        return $"{m_LockedPrompt} ({keyName})";
+                        get
+                        {
+                            if (m_IsLocked)
+                            {
+                                string keyName = m_RequiredKey != null ? m_RequiredKey.ItemName : "Key";
+                                return $"{m_LockedPrompt} ({keyName})";
+                            }
+                            return m_IsOn ? m_OpenPrompt : m_ClosedPrompt;
+                        }
                     }
-                    return m_IsOn ? m_OpenPrompt : m_ClosedPrompt;
-                }
-            }
-
-            #endregion
-
-            #region Unity Methods
-
-            private void Awake()
-            {
-                // Store the starting rotation as the "Closed" state
-                m_ClosedQuaternion = transform.localRotation;
-            }
-
-            #endregion
-
-            #region Overrides
-
-            /// <inheritdoc />
-            public override void OnInteractStart(GameObject interactor)
-            {
-                if (m_IsLocked)
-                {
-                    if (CheckForKey(interactor))
+            
+                    #endregion
+            
+                    #region Unity Methods
+            
+                    private void Awake()
                     {
-                        m_IsLocked = false;
-                        Debug.Log("Door Unlocked!");
-                        base.OnInteractStart(interactor);
+                        if (m_DoorTransform == null) m_DoorTransform = transform;
+            
+                        // Store the starting rotation as the "Closed" state
+                        m_ClosedQuaternion = m_DoorTransform.localRotation;
+                        // Pre-calculate the "Opened" state from the Inspector Euler angles
+                        m_OpenedQuaternion = Quaternion.Euler(m_OpenedRotationEuler);
                     }
-                    else
+            
+                    #endregion
+            
+                    #region Overrides
+            
+                    /// <inheritdoc />
+                    public override void OnInteractStart(GameObject interactor)
                     {
-                        Debug.Log("The door is locked. You need a key.");
+                        if (m_IsLocked)
+                        {
+                            if (CheckForKey(interactor))
+                            {
+                                m_IsLocked = false;
+                                Debug.Log("Door Unlocked!");
+                                base.OnInteractStart(interactor);
+                            }
+                            else
+                            {
+                                Debug.Log("The door is locked. You need a key.");
+                            }
+                        }
+                        else
+                        {
+                            base.OnInteractStart(interactor);
+                        }
                     }
-                }
-                else
-                {
-                    base.OnInteractStart(interactor);
-                }
-            }
-
-            /// <inheritdoc />
-            public override void OnInteractComplete(GameObject interactor)
-            {
-                // ToggleInteractable base class already flipped m_IsOn before calling this
-                
-                Quaternion targetRotation = m_IsOn ? Quaternion.Euler(m_OpenedRotationEuler) : m_ClosedQuaternion;
-
-                // Handle Tween management to prevent overlapping animations
-                m_RotationTween?.Kill();
-                m_RotationTween = transform.DOLocalRotateQuaternion(targetRotation, m_TransitionDuration)
-                    .SetEase(m_TransitionEase);
-
-                Debug.Log(m_IsOn ? "Door Opening" : "Door Closing");
-            }
-
-            #endregion
+            
+                    /// <inheritdoc />
+                    public override void OnInteractComplete(GameObject interactor)
+                    {
+                        // ToggleInteractable base class already flipped m_IsOn before calling this
+                        
+                        Quaternion targetRotation = m_IsOn ? m_OpenedQuaternion : m_ClosedQuaternion;
+            
+                        // Handle Tween management to prevent overlapping animations
+                        m_RotationTween?.Kill();
+                        m_RotationTween = m_DoorTransform.DOLocalRotateQuaternion(targetRotation, m_TransitionDuration)
+                            .SetEase(m_TransitionEase);
+            
+                        // Play Sound
+                        if (m_AudioSource != null && m_InteractionSound != null)
+                        {
+                            m_AudioSource.PlayOneShot(m_InteractionSound);
+                        }
+            
+                        Debug.Log(m_IsOn ? "Door Opening" : "Door Closing");
+                    }
+            
+                    #endregion
 
             #region Private Methods
 

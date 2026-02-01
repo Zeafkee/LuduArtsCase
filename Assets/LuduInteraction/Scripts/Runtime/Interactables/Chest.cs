@@ -70,6 +70,12 @@ namespace LuduInteraction.Runtime.Interactables
                 m_LidTransform.DOLocalRotateQuaternion(targetRot, m_OpenDuration).SetEase(m_OpenEase);
             }
 
+            // Play Sound
+            if (m_AudioSource != null && m_InteractionSound != null)
+            {
+                m_AudioSource.PlayOneShot(m_InteractionSound);
+            }
+
             // 2. Give Item
             if (m_StoredItem != null)
             {

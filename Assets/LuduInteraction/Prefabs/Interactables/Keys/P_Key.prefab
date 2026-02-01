@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1191485437118285202}
   - component: {fileID: 2882698717165845506}
   - component: {fileID: 2267819555327225782}
+  - component: {fileID: 1772357234806453358}
   m_Layer: 0
-  m_Name: P_Key_Base
+  m_Name: P_Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4973734387028869240, guid: 0f16978c26183354eba5bdc292fa1972, type: 3}
+  - {fileID: 2100000, guid: e1a856f72f85d4f4492b4f216df71430, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,3 +90,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1772357234806453358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8555883140573908067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e79810516afb7be428dcb4aaf11329cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LuduInteraction.Runtime.Interactables.KeyPickup
+  m_InteractionPrompt: Interact
+  m_IsInteractable: 1
+  m_AudioSource: {fileID: 0}
+  m_InteractionSound: {fileID: 0}
+  m_KeyItem: {fileID: 0}

@@ -45,6 +45,13 @@
             {
                 // Toggle state logic
                 HandleAnimation();
+                
+                // Play Sound
+                if (m_AudioSource != null && m_InteractionSound != null)
+                {
+                    m_AudioSource.PlayOneShot(m_InteractionSound);
+                }
+
                 TriggerEvents();
             }
 

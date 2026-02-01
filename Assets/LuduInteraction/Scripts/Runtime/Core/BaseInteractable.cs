@@ -16,6 +16,10 @@ namespace LuduInteraction.Runtime.Core
         [Tooltip("Whether the object is currently interactable.")]
         [SerializeField] private bool m_IsInteractable = true;
 
+        [Header("Audio")]
+        [SerializeField] protected AudioSource m_AudioSource;
+        [SerializeField] protected AudioClip m_InteractionSound;
+
         #endregion
 
         #region Properties

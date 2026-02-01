@@ -103,6 +103,9 @@ namespace LuduInteraction.Runtime.Player
 
             m_CurrentInteractable.OnInteractStart(gameObject);
 
+            // Re-trigger focus event to refresh UI prompt text immediately (useful for Toggles)
+            OnFocus?.Invoke(m_CurrentInteractable);
+
             if (m_CurrentInteractable.InteractionType == InteractionType.Hold)
             {
                 m_IsHolding = true;
@@ -153,6 +156,13 @@ namespace LuduInteraction.Runtime.Player
             if (m_HoldTimer >= duration)
             {
                 m_CurrentInteractable.OnInteractComplete(gameObject);
+                
+                // Refresh UI after completion
+                if (m_CurrentInteractable != null && m_CurrentInteractable.CanInteract)
+                {
+                    OnFocus?.Invoke(m_CurrentInteractable);
+                }
+                
                 m_IsHolding = false;
                 m_HoldTimer = 0f;
                 OnHoldProgress?.Invoke(0f);
