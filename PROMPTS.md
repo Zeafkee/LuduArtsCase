@@ -7,9 +7,9 @@
 
 | Bilgi | Değer |
 |-------|-------|
-| Toplam prompt sayısı | 4 |
+| Toplam prompt sayısı | 5 |
 | Kullanılan araçlar | Gemini |
-| En çok yardım alınan konular | Mimari Tasarım, Save/Load Logic, XML Docs & Naming Conventions |
+| En çok yardım alınan konular |Folder Yapısı, Mimari Tasarım, Save/Load Logic, XML Docs & Naming Conventions |
 | Tahmini LLM ile kazanılan süre | 4 saat |
 
 ---
@@ -93,7 +93,25 @@
 - [ ] Adapte ettim
 - [ ] Reddettim
 
-**Açıklama:**
-> Karmaşık JSON işlemleri ve Editor scripti hazır alındı. Envanterdeki referans kaybolma bug'ı `Resources` folder yapısı ve ID check mantığı ile çözüldü.
+
 
 ---
+
+## Prompt 5: C# Pattern Matching (Casting) Optimizasyonu
+
+**Araç:** Gemini
+**Tarih/Saat:** 2026-02-01
+
+**Prompt:**
+> Casting işlemleri için modern C# "Pattern Matching" (`if (obj is Type variable)`) yapısının kullanılması.
+
+**Alınan Cevap (Özet):**
+> `InteractionDetector` sınıfında `HoldInteractable` ve `BaseInteractable` dönüşümleri için klasik casting (`as` + `null check`) yerine pattern matching kullanıldı. Bu sayede hem tip kontrolü hem de değişken ataması tek satırda güvenli bir şekilde yapıldı.
+
+**Nasıl Kullandım:**
+- [x] Direkt kullandım
+- [ ] Adapte ettim
+- [ ] Reddettim
+
+**Açıklama:**
+> InteractionDetector içinde interaksiyon tiplerini ayırt ederken ve highlight işlemlerinde kodun daha temiz ve performanslı olması için kullanıldı.
